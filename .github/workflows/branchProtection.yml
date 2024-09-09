@@ -3,7 +3,7 @@ name: Revert Unauthorized Commits
 on:
   push:
     branches:
-      - "**"
+      - "*"
 
 
 jobs:
@@ -39,6 +39,8 @@ jobs:
           echo "Unauthorized commit detected. Reverting commit..."
           # Revert the commit
           git revert HEAD --no-edit
+          # Add the new stuff
+          git add .
           # Commit the revert
           git commit -m "Reverted commit by ${GITHUB_ACTOR} due to branch name mismatch"
           # Push the revert
