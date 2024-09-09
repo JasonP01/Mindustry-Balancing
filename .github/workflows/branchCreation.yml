@@ -26,13 +26,9 @@ jobs:
       run: |
         branchName="${GITHUB_ACTOR}-${{ github.event.inputs.branch_name }}"
         git checkout --orphan $branchName
-        git rm -rf .
         echo "branchName=$branchName" >> $GITHUB_ENV
-
-    - name: Backup .github folder
-      run: |
-        mkdir -p tmp_github
-        cp -R .github/* tmp_github/ || true
+        # Remove everything except .github/workflows
+        find . -mindepth 1 -maxdepth 1 ! -name '.github' ! -name '.git' ! -name '.github/workflows' -exec rm -rf {} +
 
     - name: Clone the remote repository
       run: |
@@ -40,12 +36,6 @@ jobs:
         cp -R tmpFolder/* .
         rm -rf tmpFolder
     
-    - name: Restore the .github folder with workflows
-      run: |
-        mkdir -p .github
-        cp -R tmp_github/* .github/ || true
-        rm -rf tmp_github
-
     - name: Push to the new branch
       run: |
         git add .
