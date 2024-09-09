@@ -33,7 +33,8 @@ jobs:
         userNameFromBranch="${branchName%-*}"
         
         # Check if the branch author matches the user part of the branch name
-        if [ "$commitAuthor" != "$userNameFromBranch" ] && [ "$commitAuthor" != "JasonP01" ]; then
+        if [ "$commitAuthor" != "$userNameFromBranch" ]; then 
+        # && [ "$commitAuthor" != "JasonP01" ]
           echo "Unauthorized commit detected. Reverting commit..."
           # Revert the commit
           git revert HEAD --no-edit
