@@ -3,9 +3,7 @@ name: Revert Unauthorized Commits
 on:
   push:
     branches:
-      - '*'
-  # Testing
-  workflow_dispatch:
+      - "*"
 
 
 jobs:
