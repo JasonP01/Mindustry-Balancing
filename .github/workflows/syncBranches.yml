@@ -1,0 +1,42 @@
+name: Sync Branches
+
+on:
+  schedule:
+    - cron: '0 * * * *'  # Runs every hour
+
+jobs:
+  sync-branches:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout the repository
+      uses: actions/checkout@v2
+
+    - name: Set up Git
+      run: |
+        git config --global user.name "github-actions"
+        git config --global user.email "github-actions@github.com"
+
+    - name: Fetch latest changes from separate repo
+      run: |
+        git remote add upstream https://github.com/Anuken/Mindustry.git
+        git fetch upstream
+        git fetch origin
+
+    - name: Update branches
+      run: |
+        for branch in $(git branch | grep -v 'master'); do
+          git checkout $branch
+          # Attempt to merge upstream/master
+          git merge upstream/master --no-edit || true
+          
+          # Resolve conflicts by favoring upstream changes
+          git diff --name-only --diff-filter=U | while read file; do
+            git checkout --theirs "$file"
+          done
+          git add .
+          git commit -m "Resolved conflicts by favoring upstream changes" || true
+          
+          # Force push changes to remote branch
+          git push origin $branch --force
+        done
