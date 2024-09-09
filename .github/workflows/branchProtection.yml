@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - '*'
+  # Testing
+  workflow_dispatch:
+
 
 jobs:
   revert-unauthorized-commits:
