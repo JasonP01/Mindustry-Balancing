@@ -3,7 +3,7 @@ name: Revert Unauthorized Commits
 on:
   push:
     branches:
-      - "*"
+      - "**"
 
 
 jobs:
