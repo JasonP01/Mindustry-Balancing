@@ -22,7 +22,7 @@ jobs:
     
     - name: Create and switch to a new branch
       run: |
-        branchName = ${GITHUB_ACTOR}-${{ github.event.inputs.branch_name }}
+        branchName=${GITHUB_ACTOR}-${{ github.event.inputs.branch_name }}
         git checkout --orphan $branchName
         git rm -rf .
         echo "branchName=$branchName" >> $GITHUB_ENV
