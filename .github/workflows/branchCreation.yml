@@ -10,6 +10,9 @@ on:
 jobs:
   create-branch:
     runs-on: ubuntu-latest
+  permissions:
+  contents: write
+
 
     steps:
     - name: Check out the repository
