@@ -10,9 +10,8 @@ on:
 jobs:
   create-branch:
     runs-on: ubuntu-latest
-  permissions:
-  contents: write
-
+    permissions:
+      contents: write
 
     steps:
     - name: Check out the repository
@@ -25,7 +24,7 @@ jobs:
     
     - name: Create and switch to a new branch
       run: |
-        branchName=${GITHUB_ACTOR}-${{ github.event.inputs.branch_name }}
+        branchName="${GITHUB_ACTOR}-${{ github.event.inputs.branch_name }}"
         git checkout --orphan $branchName
         git rm -rf .
         echo "branchName=$branchName" >> $GITHUB_ENV
@@ -39,5 +38,5 @@ jobs:
     - name: Push to the new branch
       run: |
         git add .
-        git commit -m "Initialise branch"
+        git commit -m "Initialize branch"
         git push origin $branchName
