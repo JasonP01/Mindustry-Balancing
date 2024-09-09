@@ -1,0 +1,40 @@
+name: Revert Unauthorized Commits
+
+on:
+  push:
+    branches:
+      - '*'
+
+jobs:
+  revert-unauthorized-commits:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout the repository
+      uses: actions/checkout@v2
+
+    - name: Set up Git
+      run: |
+        git config --global user.name "github-actions"
+        git config --global user.email "github-actions@github.com"
+
+    - name: Check if branch author matches GITHUB_ACTOR
+      run: |
+        branchName="${GITHUB_REF#refs/heads/}"
+        branchAuthor="${GITHUB_ACTOR}"
+
+        # Extract the user part from the branch name
+        userNameFromBranch="${branchName%-*}"
+        
+        # Check if the branch author matches the user part of the branch name
+        if [ "$branchAuthor" != "$userNameFromBranch" ]; then
+          echo "Unauthorized commit detected. Reverting commit..."
+          # Revert the commit
+          git revert HEAD --no-edit
+          # Commit the revert
+          git commit -m "Reverted commit by ${GITHUB_ACTOR} due to branch name mismatch"
+          # Push the revert
+          git push origin $branchName
+        else
+          echo "Branch author matches the branch name prefix."
+        fi
