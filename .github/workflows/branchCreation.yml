@@ -29,12 +29,23 @@ jobs:
         git rm -rf .
         echo "branchName=$branchName" >> $GITHUB_ENV
 
+    - name: Backup .github folder
+      run: |
+        mkdir -p tmp_github
+        cp -R .github/* tmp_github/ || true
+
     - name: Clone the remote repository
       run: |
         git clone https://github.com/Anuken/Mindustry.git tmpFolder
         cp -R tmpFolder/* .
         rm -rf tmpFolder
     
+    - name: Restore the .github folder with workflows
+      run: |
+        mkdir -p .github
+        cp -R tmp_github/* .github/ || true
+        rm -rf tmp_github
+
     - name: Push to the new branch
       run: |
         git add .
