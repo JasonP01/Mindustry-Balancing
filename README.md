@@ -4,11 +4,25 @@ This repository is for [Mindustry](https://github.com/Anuken/Mindustry) [#balanc
 
 Anyone can request write-access to this repository via making an [issue](https://github.com/JasonP01/Mindustry-Balancing/issues/new) 
 
+When contributing to Anuken/Mindustry a new pushing branch will be created and your commits will be merged into it, then pr'd
+
+# How to use this repository
+
+1. Make an issue requesting access, this process is manual by JasonP01 - The repository owner
+
+2. Run the [Create Branch](https://github.com/JasonP01/Mindustry-Balancing/actions/workflows/branchCreation.yml) workflow and input your branch name
+
+3. Then find your branch that was created and commit to that and you are done.
+
+All branches are updated to match Anuke's repository once an hour, any conflicts will be overwritten!
+
 # Rules
 
 1. You may NEVER commit to the master branch
 
-2. You may not commit to another user's branch without their permission
+2. You may not commit to another user's branchs
+
+3. You may not produce anything against the Mindustry discord's rules
 
 ## Punishments
 
