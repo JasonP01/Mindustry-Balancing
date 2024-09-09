@@ -21,13 +21,19 @@ jobs:
     - name: Check if branch author matches GITHUB_ACTOR
       run: |
         branchName="${GITHUB_REF#refs/heads/}"
-        branchAuthor="${GITHUB_ACTOR}"
-
+        commitAuthor="${GITHUB_ACTOR}"
+        
+        # Skip master branch
+        if [ "$branchName" = "master" ]; then
+          echo "Skipping master branch."
+          exit 0
+        fi
+        
         # Extract the user part from the branch name
         userNameFromBranch="${branchName%-*}"
         
         # Check if the branch author matches the user part of the branch name
-        if [ "$branchAuthor" != "$userNameFromBranch" ]; then
+        if [ "$commitAuthor" != "$userNameFromBranch" ] && [ "$commitAuthor" != "JasonP01" ]; then
           echo "Unauthorized commit detected. Reverting commit..."
           # Revert the commit
           git revert HEAD --no-edit
