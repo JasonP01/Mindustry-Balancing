@@ -1,0 +1,40 @@
+name: Branch Creation
+
+on:
+  workflow_dispatch:
+    inputs:
+      branch_name:
+        required: true
+        description: "Specify your branch name, make it short"
+
+jobs:
+  create-branch:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check out the repository
+      uses: actions/checkout@v2
+    
+    - name: Create global configs
+      run: |
+        git config --global user.name "github-actions"
+        git config --global user.email "github-actions@github.com"
+    
+    - name: Create and switch to a new branch
+      run: |
+        branchName = ${GITHUB_ACTOR}-${{ github.event.inputs.branch_name }}
+        git checkout --orphan $branchName
+        git rm -rf .
+        echo "branchName=$branchName" >> $GITHUB_ENV
+
+    - name: Clone the remote repository
+      run: |
+        git clone https://github.com/Anuken/Mindustry.git tmpFolder
+        cp -R tmpFolder/* .
+        rm -rf tmpFolder
+    
+    - name: Push to the new branch
+      run: |
+        git add .
+        git commit -m "Initialise branch"
+        git push origin $branchName
