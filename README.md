@@ -24,6 +24,10 @@ All branches are updated to match Anuke's repository once an hour, any conflicts
 
 3. You may not produce anything against the Mindustry discord's rules
 
+4. You may not rename a branch, the first half MUST be a github username and is automatically put there
+
+5. You may not create your own branches manually, you may only create a branch through the action
+
 ## Punishments
 
 The punishment for breaking the rules is you lose write access, and any pr/issue made is automatically rejected regardless of the content
