@@ -1,0 +1,35 @@
+name: "Write Access Application"
+description: "Request write access to the repository"
+title: "Write Access Request - <your Discord username>"
+labels: [write-access]
+assignees: [JasonP01] # Assigns you automatically
+
+body:
+  - type: input
+    id: discord-username
+    attributes:
+      label: "Discord Username"
+      description: "Enter your Discord username (e.g., User#1234)"
+      placeholder: "User#1234"
+    validations:
+      required: true
+
+  - type: textarea
+    id: reason
+    attributes:
+      label: "Why do you want write access?"
+      description: "Explain why you want write access (optional)"
+      placeholder: "I want to help with balancing changes... \n\n You will gain it either way"
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: agreement
+    attributes:
+      label: "Agreement"
+      description: "Please confirm the following:"
+      options:
+        - label: "I promise to obey the rules of the repo"
+          required: true
+        - label: "I understand the rules of the repo fully"
+          required: true
