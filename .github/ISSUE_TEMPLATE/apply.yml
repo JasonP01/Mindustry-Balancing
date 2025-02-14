@@ -4,6 +4,9 @@ labels: [write-access]
 assignees: [JasonP01] # Assigns you automatically
 
 body:
+  - type: markdown
+    attributes:
+      value: "**Title is auto-generated. You cannot edit it.**"
 
   - type: input
     id: discord-username
