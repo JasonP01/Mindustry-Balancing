@@ -1,10 +1,13 @@
 name: "Write Access Application"
 description: "Request write access to the repository"
-title: "Write Access Request - <your Discord username>"
 labels: [write-access]
 assignees: [JasonP01] # Assigns you automatically
 
 body:
+  - type: markdown
+    attributes:
+      value: "**Title is auto-generated. You cannot edit it.**"
+
   - type: input
     id: discord-username
     attributes:
@@ -18,8 +21,8 @@ body:
     id: reason
     attributes:
       label: "Why do you want write access?"
-      description: "Explain why you want write access (optional)"
-      placeholder: "I want to help with balancing changes... \n\n You will gain it either way"
+      description: "Explain why you need write access (optional)"
+      placeholder: "I want to help with balancing changes..."
     validations:
       required: false
 
