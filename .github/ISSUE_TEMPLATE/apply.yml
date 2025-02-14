@@ -1,12 +1,13 @@
 name: "Write Access Application"
 description: "Request write access to the repository"
+title: "Write Access Application"
 labels: [write-access]
 assignees: [JasonP01] # Assigns you automatically
 
 body:
   - type: markdown
     attributes:
-      value: "**Title is auto-generated. You cannot edit it.**"
+      value: "**Do not edit the title.**"
 
   - type: input
     id: discord-username
