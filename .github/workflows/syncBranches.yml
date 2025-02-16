@@ -1,0 +1,57 @@
+name: Sync with Upstream
+
+on:
+  schedule:
+    - cron: "0/30 * * * *" # Runs every 30 minutes
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: "Branch to sync (only for manual trigger)"
+        required: true
+
+permissions: write-all
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Fetch all branches
+
+      - name: Set up Git
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Add upstream remote
+        run: |
+          git remote add upstream https://github.com/Anuken/Mindustry.git
+          git fetch upstream
+
+      - name: Merge upstream changes
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            # Manual trigger: update only the specified branch
+            branch="${{ github.event.inputs.branch }}"
+            echo "Manually triggered for branch: $branch"
+            branches="$branch"
+          else
+            # Scheduled run: update all branches except master
+            branches=$(git for-each-ref --format '%(refname:short)' refs/heads/ | grep -v '^master$')
+          fi
+
+          for branch in $branches; do
+            echo "Merging upstream into $branch"
+            git checkout $branch
+
+            if git merge upstream/$branch; then
+              echo "Merge successful without conflicts."
+            else
+              echo "Merge conflict detected! Retrying with -X theirs..."
+              git merge --strategy-option=theirs upstream/$branch
+            fi
+
+            git push origin $branch
+          done
